@@ -26,7 +26,7 @@ function userTable()
         .delete(`/usersData/${id}`)
         .then(response => {
           console.log(response)
-          setData(prevData => prevData.filter(user => user.id !== id))
+          setData(data => data.filter(user => user.id !== id))
         })
         .catch(error => {
           console.error(error.response.data)

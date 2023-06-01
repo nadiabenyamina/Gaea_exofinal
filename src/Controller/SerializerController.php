@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class SerializerController extends AbstractController
 {    
-    // Table User
+    // Serialisation table User
     #[Route('/usersData', name: 'user_data', methods: 'GET')]
     public function usersData(UsersRepository $usersRepository, SerializerInterface $serializer): JsonResponse
     {
@@ -23,6 +23,7 @@ class SerializerController extends AbstractController
         return new JsonResponse($jsonUsersList, Response::HTTP_OK, [], true);
     }
 
+    // Fonction delete table user
     #[Route('/usersData/{id}', name: 'delete_user', methods: 'DELETE')]
     public function deleteUser($id, UsersRepository $usersRepository, EntityManagerInterface $entityManager)
     {
@@ -30,15 +31,14 @@ class SerializerController extends AbstractController
 
         if (!$user) {
             return new JsonResponse(['message' => 'Utilisateur non trouvé'], Response::HTTP_NOT_FOUND);
-        } else {
-            return new JsonResponse(['message' => "L'utilisateur a bien été supprimé."]);
         }
         
         $entityManager->remove($user);
         $entityManager->flush();
+        return new JsonResponse(['message' => "L'utilisateur a bien été supprimé."]);
     }
 
-    // Table Possession
+    // Serialisation table Possession
     #[Route('/usersPossessions', name: 'users_possession', methods: 'GET')]
     public function userPossession(PossessionsRepository $possessionsRepository, SerializerInterface $serializer): JsonResponse
     {
